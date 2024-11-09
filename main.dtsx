@@ -1,0 +1,630 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/7/2024 10:01:38 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DW-21"
+  DTS:CreatorName="DW-21\Administrator"
+  DTS:DTSID="{5A72BAED-4D9B-4643-AAA9-AE77BCAF87C2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.128"
+  DTS:LocaleID="1053"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="1"
+  DTS:VersionGUID="{4C2446FA-250D-46FD-B82F-708B23BDDB4D}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.LabStaging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A6F4D28F-9968-4348-A1A0-813E4B0F4FDF}"
+      DTS:ObjectName="LocalHost.LabStaging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=LabStaging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.LabStagingTest]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{6FEBBF2C-0776-4FF2-B4F7-5C416EB6619E}"
+      DTS:ObjectName="LocalHost.LabStagingTest">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=.;Initial Catalog=LabStagingTest;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Date Dimension"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{DCC50273-7C6B-4523-AE86-A8AB2912ED17}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Date Dimension"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Product Dimension"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{90A9E3BD-0320-42DF-B3CA-0C9DE64D57B7}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Product Dimension"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Product Dimension\LabStage Product Table"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="LabStage Product Table"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Inventory_Products]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Product Dimension\LabStage Product Table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.LabStagingTest]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.LabStagingTest]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[ProductAlternateKey]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[ProductAlternateKey]"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[ProductAlternateKey]"
+                      name="ProductAlternateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[WeightUnitMeasureCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[WeightUnitMeasureCode]"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[WeightUnitMeasureCode]"
+                      name="WeightUnitMeasureCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[SizeUnitMeasureCode]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[SizeUnitMeasureCode]"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[SizeUnitMeasureCode]"
+                      name="SizeUnitMeasureCode"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[EnglishProductName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[EnglishProductName]"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[EnglishProductName]"
+                      name="EnglishProductName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[StandardCost]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[StandardCost]"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[StandardCost]"
+                      name="StandardCost"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[Color]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[Color]"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[Color]"
+                      name="Color"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[SafetyStockLevel]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[SafetyStockLevel]"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[SafetyStockLevel]"
+                      name="SafetyStockLevel"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[ReorderPoint]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[ReorderPoint]"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[ReorderPoint]"
+                      name="ReorderPoint"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[ListPrice]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[ListPrice]"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[ListPrice]"
+                      name="ListPrice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[Size]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[Size]"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[Size]"
+                      name="Size"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[SizeRange]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[SizeRange]"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[SizeRange]"
+                      name="SizeRange"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[Weight]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[Weight]"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[Weight]"
+                      name="Weight"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[DaysToManufacture]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[DaysToManufacture]"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[DaysToManufacture]"
+                      name="DaysToManufacture"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[DealerPrice]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[DealerPrice]"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[DealerPrice]"
+                      name="DealerPrice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[ModelName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[ModelName]"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[ModelName]"
+                      name="ModelName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[EnglishDescription]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[EnglishDescription]"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].Columns[EnglishDescription]"
+                      name="EnglishDescription"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[ProductAlternateKey]"
+                      dataType="wstr"
+                      length="255"
+                      name="ProductAlternateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[WeightUnitMeasureCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="WeightUnitMeasureCode" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[SizeUnitMeasureCode]"
+                      dataType="wstr"
+                      length="255"
+                      name="SizeUnitMeasureCode" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[EnglishProductName]"
+                      dataType="wstr"
+                      length="255"
+                      name="EnglishProductName" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[StandardCost]"
+                      dataType="r8"
+                      name="StandardCost" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[Color]"
+                      dataType="wstr"
+                      length="255"
+                      name="Color" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[SafetyStockLevel]"
+                      dataType="r8"
+                      name="SafetyStockLevel" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[ReorderPoint]"
+                      dataType="r8"
+                      name="ReorderPoint" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[ListPrice]"
+                      dataType="r8"
+                      name="ListPrice" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[Size]"
+                      dataType="r8"
+                      name="Size" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[SizeRange]"
+                      dataType="wstr"
+                      length="255"
+                      name="SizeRange" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[Weight]"
+                      dataType="r8"
+                      name="Weight" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[DaysToManufacture]"
+                      dataType="r8"
+                      name="DaysToManufacture" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[DealerPrice]"
+                      dataType="r8"
+                      name="DealerPrice" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[ModelName]"
+                      dataType="wstr"
+                      length="255"
+                      name="ModelName" />
+                    <externalMetadataColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Output].ExternalColumns[EnglishDescription]"
+                      dataType="wstr"
+                      length="255"
+                      name="EnglishDescription" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[ProductAlternateKey]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[ProductAlternateKey]"
+                      name="ProductAlternateKey" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[WeightUnitMeasureCode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[WeightUnitMeasureCode]"
+                      name="WeightUnitMeasureCode" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[SizeUnitMeasureCode]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[SizeUnitMeasureCode]"
+                      name="SizeUnitMeasureCode" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[EnglishProductName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[EnglishProductName]"
+                      name="EnglishProductName" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[StandardCost]"
+                      dataType="r8"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[StandardCost]"
+                      name="StandardCost" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[Color]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[Color]"
+                      name="Color" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[SafetyStockLevel]"
+                      dataType="r8"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[SafetyStockLevel]"
+                      name="SafetyStockLevel" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[ReorderPoint]"
+                      dataType="r8"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[ReorderPoint]"
+                      name="ReorderPoint" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[ListPrice]"
+                      dataType="r8"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[ListPrice]"
+                      name="ListPrice" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[Size]"
+                      dataType="r8"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[Size]"
+                      name="Size" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[SizeRange]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[SizeRange]"
+                      name="SizeRange" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[Weight]"
+                      dataType="r8"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[Weight]"
+                      name="Weight" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[DaysToManufacture]"
+                      dataType="r8"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[DaysToManufacture]"
+                      name="DaysToManufacture" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[DealerPrice]"
+                      dataType="r8"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[DealerPrice]"
+                      name="DealerPrice" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[ModelName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[ModelName]"
+                      name="ModelName" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[EnglishDescription]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[EnglishDescription]"
+                      name="EnglishDescription" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Product Dimension\LabStage Product Table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Product Inventory Fact"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{166E1579-9F1F-425E-9082-5DD6D255C7D2}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Product Inventory Fact"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{7B3A40AC-076D-458A-B8FE-4BA64DD88590}"
+      DTS:From="Package\Product Dimension"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Product Inventory Fact" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{4C23F7B6-E9B8-4A95-A5B5-183557BEF88D}"
+      DTS:From="Package\Date Dimension"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Product Inventory Fact" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="167,42"
+          Id="Package\Product Dimension"
+          TopLeft="95,59" />
+        <NodeLayout
+          Size="186,42"
+          Id="Package\Product Inventory Fact"
+          TopLeft="227,190" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="178.5,101">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="141.5,89"
+              Start="0,0"
+              End="141.5,81.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,40.5"
+                    Point2="0,44.5"
+                    Point3="4,44.5" />
+                  <mssgle:LineSegment
+                    End="137.5,44.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="137.5,44.5"
+                    Point2="141.5,44.5"
+                    Point3="141.5,48.5" />
+                  <mssgle:LineSegment
+                    End="141.5,81.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="153,42"
+          Id="Package\Date Dimension"
+          TopLeft="426,60" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="502.5,102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-152.833333333333,88"
+              Start="0,0"
+              End="-152.833333333333,80.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.3496801705757" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,48.3496801705757"
+                    Point2="0,52.3496801705757"
+                    Point3="-4,52.3496801705757" />
+                  <mssgle:LineSegment
+                    End="-148.833333333333,52.3496801705757" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-148.833333333333,52.3496801705757"
+                    Point2="-152.833333333333,52.3496801705757"
+                    Point3="-152.833333333333,56.3496801705757" />
+                  <mssgle:LineSegment
+                    End="-152.833333333333,80.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Product Dimension">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="191,42"
+          Id="Package\Product Dimension\LabStage Product Table"
+          TopLeft="143,123" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Product Dimension\LabStage Product Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
